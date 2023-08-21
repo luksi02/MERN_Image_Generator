@@ -45,9 +45,9 @@ const CreatePost = () => {
 
                 });
 
-                console.log(response.data.data[0].url)
+                // console.log(response.data.data[0].url)
 
-                console.log(response)
+                // console.log(response)
 
                 if (!response.ok) {
                     throw new Error(`Request failed with status: ${response.status}`);
@@ -66,7 +66,7 @@ const CreatePost = () => {
                 alert(error);
                 console.log(error.response)
                 console.log(error.response.status)
-                console.log(error.response.data)
+                // console.log(error.response.data)
             }
             finally {
                 setGeneratingImg(false);
