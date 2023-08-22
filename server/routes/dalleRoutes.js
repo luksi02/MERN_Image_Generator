@@ -1,6 +1,7 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import { Configuration, OpenAIApi } from "openai";
+import OPENAI_API_KEY from "../OpenAI_API_KEY.js"
 
 dotenv.config();
 
@@ -8,8 +9,9 @@ const router = express.Router();
 
 const configuration = new Configuration({
     // API KEY below:
-    
-    // apiKey: process.env.DALLE_API_KEY,
+    apiKey: OPENAI_API_KEY,
+
+
 });
 
 const openai = new OpenAIApi(configuration);
@@ -32,21 +34,21 @@ router.route('/').post( async (req, res) => {
             response_format: 'b64_json',
         })
 
-        console.log(aiResponse.data.data[0].url)
-        console.log(aiResponse)
+        // console.log(aiResponse.data.data[0].url)
+        // console.log(aiResponse)
 
 
-        // const image = aiResponse.data.b64_json;
+        const image = aiResponse.data.data[0].b64_json;
 
-        // res.status(200).json({ photo: image });
+        res.status(200).json({ photo: image });
 
     }
     catch (error) {
 
-        // console.log(error);
+        console.log(error);
 
-        console.log(error.response.status)
-        console.log(error.response.data)
+        // console.log(error.response.status)
+        // console.log(error.response.data)
 
 
         // res.status(500).send(error?.response.data.error.message)
