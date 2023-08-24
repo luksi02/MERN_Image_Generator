@@ -3,13 +3,15 @@ import * as dotenv from "dotenv";
 import { v2 as cloudinary } from "cloudinary";
 
 import Post from "../mongodb/models/post.js";
+import {CLOUD_NAME, CLOUD_API_KEY, CLOUD_SECRET_KEY} from "../constants.js"
 
 dotenv.config();
 
 cloudinary.config({
-    cloud_name: process.env.CLOUD_NAME,
-    cloud_api_key: process.env.CLOUD_API_KEY,
-    cloud_secret: process.env.CLOUD_SECRET_KEY,
+    cloud_name: CLOUD_NAME,
+    api_key: CLOUD_API_KEY,
+    api_secret: CLOUD_SECRET_KEY,
+    secure: true
 })
 
 const router = express.Router();
@@ -18,15 +20,10 @@ const router = express.Router();
 router.route('/').get(async (req,res) => {
 
     try {
-
         const posts = await Post.find({});
-
         res.status(200).json({ success: true, data: posts })
-
     } catch (error) {
-
         res.status(500).json({ success: false, message: error })
-
     }
 
 });
@@ -35,7 +32,6 @@ router.route('/').get(async (req,res) => {
 
 router.route('/').post(async (req,res) => {
     try {
-
         const { name, prompt, photo } = req.body;
         const photoUrl = await cloudinary.uploader.upload(photo);
 
@@ -46,18 +42,29 @@ router.route('/').post(async (req,res) => {
         })
 
         res.status(201).json({ success: true, data: newPost });
-
         console.log('seems fine')
-
     } catch (error) {
-
         res.status(500).json({ success: false, message: error })
-
         console.log('failed')
         console.log(error)
-
     }
+});
 
+router.route('/cloud/').get(async (req,res) => {
+    try {
+        await cloudinary.uploader.upload("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg",
+            {public_id: "olympic_flag"},
+            function (error, result) {
+                console.log(result)
+            })
+        console.log('cloud seems fine')
+    } catch (error) {
+        res.status(500).json({ success: false, message: error })
+        console.log('cloud failed')
+        // console.log(CLOUD_API_KEY1)
+        console.log(cloudinary.config())
+        console.log(error)
+    }
 });
 
 export default router;

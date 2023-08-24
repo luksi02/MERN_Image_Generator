@@ -1,7 +1,7 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import { Configuration, OpenAIApi } from "openai";
-import OPENAI_API_KEY from "../OpenAI_API_KEY.js"
+import OPENAI_API_KEY from "../constants.js"
 
 dotenv.config();
 
