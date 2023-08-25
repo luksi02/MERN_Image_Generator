@@ -3,14 +3,14 @@ import * as dotenv from "dotenv";
 import { v2 as cloudinary } from "cloudinary";
 
 import Post from "../mongodb/models/post.js";
-import {CLOUD_NAME, CLOUD_API_KEY, CLOUD_SECRET_KEY} from "../constants.js"
+// import {CLOUD_NAME, CLOUD_API_KEY, CLOUD_API_SECRET} from "../constants.js"
 
 dotenv.config();
 
 cloudinary.config({
-    cloud_name: CLOUD_NAME,
-    api_key: CLOUD_API_KEY,
-    api_secret: CLOUD_SECRET_KEY,
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET,
     secure: true
 })
 
@@ -61,7 +61,6 @@ router.route('/cloud/').get(async (req,res) => {
     } catch (error) {
         res.status(500).json({ success: false, message: error })
         console.log('cloud failed')
-        // console.log(CLOUD_API_KEY1)
         console.log(cloudinary.config())
         console.log(error)
     }
