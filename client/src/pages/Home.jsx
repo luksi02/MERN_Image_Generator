@@ -2,7 +2,6 @@ import React, {useState, useEffect } from "react";
 
 import {Loader, Card, FormField} from "../components/index.js"
 
-
 const RenderCards = ( {data, title} ) => {
     if (data?.length > 0) {
         return data.map((post) => <Card key={post._id} {...post} />)
@@ -29,7 +28,11 @@ const Home = () => {
             setLoading(true);
 
             try {
-                const response = await fetch('http://localhost:8080/api/v1/post', {
+                // LOCAL SERVER:
+                // const response = await fetch('http://localhost:8080/api/v1/post', {
+
+                // DEPLOYED SERVER:
+                const response = await fetch('https://luksi02-mern-image-generator.onrender.com/api/v1/post', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -37,6 +40,7 @@ const Home = () => {
                 });
 
                 console.log('response is there')
+                console.log(response)
 
                 if (response.ok) {
                     const result = await response.json();
@@ -45,7 +49,7 @@ const Home = () => {
                     console.error('Failed to fetch data:', response.status, response.statusText);
                 }
             } catch (error) {
-                console.error('An error occurred:', error);
+                console.log('An error occurred:', error);
             } finally {
                 setLoading(false);
             }
