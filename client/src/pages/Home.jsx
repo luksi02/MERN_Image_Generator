@@ -80,7 +80,7 @@ const Home = () => {
         <section className="max-w-7xl mx-auto">
             <div>
 
-                 <h1 className="font-extrabold text-gold text-[32px]">
+                 <h1 className="font-extrabold text-blue-100/90 text-[30px]">
                     Luksi02's DALL-E clone
                 </h1>
 
